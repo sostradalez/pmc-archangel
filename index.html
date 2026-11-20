@@ -4,7 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ЧВК «Архангел» — Частная военная компания</title>
-<meta name="description" content="ЧВК «Архангел» — частная военная компания. Аномальное направление, история подразделения, реестр ролей и подразделения.">
+<meta name="description" content="ЧВК «Архангел» — частная военная компания: история подразделения, подразделения и реестр ролей.">
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
@@ -53,7 +54,8 @@
     backdrop-filter:blur(8px);
     border-bottom:1px solid var(--line);
   }
-  .brand{font-weight:800;letter-spacing:.14em;font-size:13px;white-space:nowrap}
+  .brand{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:.14em;font-size:13px;white-space:nowrap}
+  .brand-mark{width:24px;height:24px;flex:none;filter:drop-shadow(0 0 8px rgba(255,60,50,.4))}
   .brand span{color:var(--acid-dim);font-weight:600;letter-spacing:.1em}
   .nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
   .nav a{
@@ -90,6 +92,10 @@
     mask-image:linear-gradient(to bottom, #000 55%, transparent);
   }
   .hero .wrap{position:relative}
+  .hero-mark{
+    display:block;width:104px;height:104px;margin:0 0 22px;
+    filter:drop-shadow(0 0 30px rgba(255,70,60,.28)) drop-shadow(0 0 70px rgba(141,255,106,.08));
+  }
   h1{
     font-size:clamp(30px,6.2vw,68px);line-height:1.02;margin:0 0 18px;
     letter-spacing:.06em;font-weight:800;text-transform:uppercase;
@@ -160,11 +166,6 @@
   }
   .role summary::-webkit-details-marker{display:none}
   .r-name{font-weight:600;font-size:13.5px;letter-spacing:.04em;flex:1}
-  .badge{
-    font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;padding:3px 7px;border-radius:2px;white-space:nowrap;
-  }
-  .badge.busy{color:var(--danger);border:1px solid rgba(255,92,77,.4);background:rgba(255,92,77,.08)}
-  .badge.free{color:var(--acid);border:1px solid rgba(141,255,106,.35);background:rgba(141,255,106,.07)}
   .chev{color:var(--acid-dim);transition:.2s;font-size:16px;line-height:1}
   .role[open] .chev{transform:rotate(90deg)}
   .r-body{padding:0 16px 16px;border-top:1px solid var(--line);margin-top:0}
@@ -240,6 +241,7 @@
   @media (max-width:760px){
     section{padding:52px 0}
     .hero{padding:64px 0 52px}
+    .hero-mark{width:76px;height:76px;margin-bottom:16px}
     .stats{grid-template-columns:1fr 1fr}
     .tl::before{left:56px}
     .tl-item{grid-template-columns:58px 1fr;gap:16px}
@@ -256,7 +258,7 @@
 <div class="scan"></div>
 
 <header class="topbar">
-  <div class="brand">ЧВК «АРХАНГЕЛ» <span>// PMC-ARCHANGEL</span></div>
+  <div class="brand"><img class="brand-mark" src="logo.png" alt="" width="24" height="24">ЧВК «АРХАНГЕЛ» <span>// PMC-ARCHANGEL</span></div>
   <nav class="nav">
     <a href="#home">Главная</a>
     <a href="#history">История</a>
@@ -272,13 +274,13 @@
   <section id="home" class="hero">
     <div class="wrap">
       <div class="kicker">/// SECURE LINE ///</div>
+      <img class="hero-mark" src="logo.png" alt="Эмблема ЧВК «Архангел»" width="104" height="104">
       <h1>ЧВК «Архангел»</h1>
-      <p class="tagline">Частная военная компания · аномальное направление · осн. 2021</p>
+      <p class="tagline">Частная военная компания · осн. 2021</p>
       <p>
         «Архангел» — частная военная компания, выросшая из элитного спецподразделения ВС РФ, созданного в 2015 году.
-        Боевой путь: Турция — Мали — Калининград — Скандинавия — Великобритания. С 2025 года основным профилем
-        компании стала аномальная активность: изъятие объектов и документов с учреждений Фонда SCP и их последующая
-        реализация.
+        Боевой путь: Турция — Мали — Калининград — Скандинавия — Великобритания. С 2025 года компания работает
+        по учреждениям Фонда SCP: изъятие объектов и документов и их последующая реализация.
       </p>
       <p class="dim">
         Мы работаем там, где регулярные армии отказываются воевать: на объектах, о которых не пишут в сводках.
@@ -482,7 +484,7 @@
           <div class="code">Elite unit</div>
           <h3>Inquisitors</h3>
           <p>Элитное подразделение, сформированное в 2026 году из лучших бойцов ЧВК после первой поставки
-            экзоскелетов и военных имплантов от Anderson Robotics. Ударная сила компании на аномальных объектах.</p>
+            экзоскелетов и военных имплантов от Anderson Robotics. Ударная сила компании в штурмовых операциях.</p>
         </article>
         <article class="card">
           <div class="code">Recon</div>
@@ -508,12 +510,6 @@
           <p>Европейская авиатехника и бронетехника, полученная в 2023 году. Резервная база в Великобритании
             хранит практически весь парк техники и вооружения.</p>
         </article>
-        <article class="card">
-          <div class="code">Training</div>
-          <h3>Подготовка новобранцев</h3>
-          <p>Тренировочный комплекс на территории Африки, организованный Chaos Insurgency в рамках договора 2026 года.
-            Первичная подготовка и отбор в корпуса.</p>
-        </article>
       </div>
     </div>
   </section>
@@ -523,7 +519,7 @@
     <div class="wrap">
       <div class="kicker">/// реестр личного состава ///</div>
       <h2>Реестр ролей</h2>
-      <p class="sub">Актуальные вакансии и занятые должности. Нажмите на роль, чтобы раскрыть знания, доступ и требования.</p>
+      <p class="sub">Должности компании. Нажмите на роль, чтобы раскрыть знания, доступ и требования.</p>
       <div class="filters" id="filters"></div>
       <div class="roles" id="rolesGrid"></div>
     </div>
@@ -534,7 +530,7 @@
     <div class="wrap">
       <div class="kicker">/// оперативные данные ///</div>
       <h2>Противник</h2>
-      <p class="sub">Силы, действующие против компании на аномальном направлении.</p>
+      <p class="sub">Силы, действующие против компании.</p>
 
       <div class="grid g3" style="margin-bottom:26px">
         <div class="obj">
@@ -543,7 +539,7 @@
             <span class="cls threat">ПРОТИВНИК · ВЫСОКАЯ</span>
           </div>
           <div class="obj-body">
-            <p>Враждебная группировка, действующая против ЧВК «Архангел» на аномальном направлении.</p>
+            <p>Враждебная группировка, действующая против ЧВК «Архангел».</p>
             <p><strong>Рекомендация:</strong> при контакте — немедленный доклад командиру корпуса, отход по
               заранее согласованному маршруту. Самостоятельный бой без поддержки запрещён.</p>
           </div>
@@ -552,7 +548,7 @@
         <div class="obj">
           <div class="obj-head">
             <b>ЧВК «PHYSICS Division»</b>
-            <span class="cls threat">ПРОТИВНИК · ГОК</span>
+            <span class="cls threat">ПРОТИВНИК · ВЫСОКАЯ</span>
           </div>
           <div class="obj-body">
             <p>Частная военная компания Глобальной Окультной Коалиции, созданная в 2021 году для ликвидации
@@ -616,62 +612,62 @@
   /* ---------------- РЕЕСТР РОЛЕЙ ---------------- */
   const ROLES = [
     {
-      n: 'Командир ЧВК', d: 'Командование', busy: true,
+      n: 'Командир ЧВК', d: 'Командование',
       k: 'Полный доступ ко всей информации о структуре компании, операциях, договорах и личном составе. Право подписи договоров и санкции на штурм учреждений Фонда.',
       r: 'Полное командование корпусами и подразделениями. Опыт руководства на проекте. Соблюдение уставного диалекта.'
     },
     {
-      n: 'Заместитель командира', d: 'Командование', busy: true,
+      n: 'Заместитель командира', d: 'Командование',
       k: 'Доступ к оперативным планам, кадровым документам и снабжению. Принимает командование при отсутствии или гибели командира.',
       r: 'Координация штаба и смен. Готовность принять командование в любой момент.'
     },
     {
-      n: 'Начальник штаба', d: 'Командование', busy: false,
+      n: 'Начальник штаба', d: 'Командование',
       k: 'Доступ к оперативным картам, приказам, директивам и документам по личному составу базы.',
       r: 'Ведение делопроизводства, координация смен и работы служб.'
     },
     {
-      n: 'Инквизитор', d: 'Inquisitors', busy: true,
+      n: 'Инквизитор', d: 'Inquisitors',
       k: 'Экзоскелет и военные импланты Anderson Robotics. Полный доступ к данным об SCP-объектах и способам их ВУС в рамках операции. Право самостоятельных действий при контакте.',
       r: 'Перевод только по итогам отбора из штурмовых корпусов. Максимальная боевая подготовка и дисциплина.'
     },
     {
-      n: 'Глава Spy division', d: 'Spy division', busy: true,
+      n: 'Глава Spy division', d: 'Spy division',
       k: 'Доступ к агентурной сети, личным делам сотрудников учреждений Фонда, данным о МОГ и перечню объектов, назначенных к изъятию.',
       r: 'Опыт разведки, соблюдение конспирации, работа с легендой.'
     },
     {
-      n: 'Агент Spy division', d: 'Spy division', busy: false,
+      n: 'Агент Spy division', d: 'Spy division',
       k: 'Доступ к данным по своему учреждению прикрытия. Частичная информация о планах компании в регионе.',
       r: 'Соблюдение легенды. Постоянная работа вне базы.'
     },
     {
-      n: 'Командир штурмового корпуса', d: 'Штурмовой корпус', busy: false,
+      n: 'Командир штурмового корпуса', d: 'Штурмовой корпус',
       k: 'Доступ к планам операций корпуса, ведомостям снабжения и заявкам на бронетехнику.',
       r: 'Боевой опыт. Координация корпуса в операции. Уставной диалект.'
     },
     {
-      n: 'Штурмовик', d: 'Штурмовой корпус', busy: false,
+      n: 'Штурмовик', d: 'Штурмовой корпус',
       k: 'Доступ к плану операции в рамках своей роли. Техническая помощь склада. Бронетехника — по распоряжению командира.',
       r: 'Соблюдение военного диалекта и дисциплины. Без самовольных действий без приказа.'
     },
     {
-      n: 'Снайпер', d: 'Штурмовой корпус', busy: false,
+      n: 'Снайпер', d: 'Штурмовой корпус',
       k: 'Доступ к плану операции и позициям охранения. Отдельная задача на объекте при штурме.',
       r: 'Навык стрельбы на дальние дистанции. Соблюдение дисциплины.'
     },
     {
-      n: 'Оператор тяжёлого вооружения', d: 'Штурмовой корпус', busy: false,
+      n: 'Оператор тяжёлого вооружения', d: 'Штурмовой корпус',
       k: 'Доступ к складу вооружения и заявкам на тяжёлую технику в рамках операции.',
       r: 'Знание матчасти. Соблюдение уставного диалекта.'
     },
     {
-      n: 'Боевой медик', d: 'Обеспечение', busy: true,
-      k: 'Доступ к медицинским данным персонала и к сведениям о биологических аномалиях класса Кетер и ниже.',
+      n: 'Боевой медик', d: 'Обеспечение',
+      k: 'Доступ к медицинским данным персонала и к сведениям об объектах класса Кетер и ниже.',
       r: 'Медицинские знания — хотя бы минимальные. Работа в составе штурмовой группы.'
     },
     {
-      n: 'Пилот', d: 'Обеспечение', busy: false,
+      n: 'Пилот', d: 'Обеспечение',
       k: 'Доступ к авиатехнике, графикам вылетов и части данных о дислокации баз компании.',
       r: 'Навык управления воздушной техникой. Соблюдение дисциплины.'
     },
@@ -681,14 +677,10 @@
   const filtersBox = document.getElementById('filters');
 
   function roleCard(r) {
-    const badge = r.busy
-      ? '<span class="badge busy">Занята</span>'
-      : '<span class="badge free">Не занята</span>';
     return [
       '<details class="role" data-dept="' + r.d + '">',
         '<summary>',
           '<span class="r-name">' + r.n + '</span>',
-          badge,
           '<span class="chev">›</span>',
         '</summary>',
         '<div class="r-body">',

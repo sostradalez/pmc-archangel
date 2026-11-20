@@ -30,5 +30,6 @@ GitHub Pages пересоберёт сайт автоматически за 30�
 
 ```
 index.html   — сама страница (CSS и JS внутри)
+logo.png     — эмблема: favicon, знак в шапке и на главном экране
 .nojekyll    — отключает обработку Jekyll на GitHub Pages
 ```
