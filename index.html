@@ -168,7 +168,7 @@
   .chev{color:var(--acid-dim);transition:.2s;font-size:16px;line-height:1}
   .role[open] .chev{transform:rotate(90deg)}
   .r-body{padding:0 16px 16px;border-top:1px solid var(--line);margin-top:0}
-  .specs{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin:14px 0}
+  .specs{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);margin:14px 0}
   .specs > div{background:var(--panel);padding:9px 11px}
   .specs dt{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
   .specs dd{margin:0;font-size:13px;color:var(--acid);font-weight:600}
@@ -207,12 +207,32 @@
   .classified ul{margin:0 0 14px;padding-left:18px;color:var(--muted);font-size:13.5px}
   .classified li{margin-bottom:6px}
 
-  /* ---------- contact ---------- */
-  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
-  .cbox{background:var(--panel);border:1px solid var(--line);padding:18px;border-radius:2px}
-  .cbox span{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
-  .cbox b{font-size:14px;letter-spacing:.06em;color:var(--text)}
-  .cbox .edit{color:var(--acid);border-bottom:1px dashed var(--acid-dim)}
+  /* ---------- music player ---------- */
+  .player{
+    position:fixed;right:16px;bottom:16px;z-index:9999;
+    display:flex;align-items:center;gap:10px;
+    background:rgba(6,9,7,.94);border:1px solid var(--line-bright);border-radius:2px;
+    padding:8px 10px;backdrop-filter:blur(8px);
+    box-shadow:0 0 24px rgba(0,0,0,.55);
+  }
+  .player button{
+    font-family:var(--mono);font-size:11px;line-height:1;cursor:pointer;
+    width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    background:rgba(141,255,106,.06);border:1px solid var(--acid-dim);color:var(--acid);
+    border-radius:2px;transition:.15s;
+  }
+  .player button:hover,.player button.on{background:var(--acid);color:var(--bg);border-color:var(--acid)}
+  .player .p-lbl{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+  .player input[type=range]{
+    -webkit-appearance:none;appearance:none;width:84px;height:2px;
+    background:var(--line-bright);outline:none;cursor:pointer;
+  }
+  .player input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--acid);
+    box-shadow:0 0 8px rgba(141,255,106,.6);cursor:pointer;
+  }
+  .player input[type=range]::-moz-range-thumb{width:11px;height:11px;border:0;border-radius:50%;background:var(--acid)}
+  #ytHost{position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none}
 
   footer{padding:34px 0 44px;color:var(--muted);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
   footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -226,6 +246,9 @@
     .tl-item .yr{font-size:12px;padding-top:16px}
     .tl-card::before{left:-26px}
     .specs{grid-template-columns:1fr}
+    .player{right:10px;bottom:10px;padding:6px 8px;gap:8px}
+    .player .p-lbl{display:none}
+    .player input[type=range]{width:70px}
   }
 </style>
 </head>
@@ -239,8 +262,7 @@
     <a href="#history">История</a>
     <a href="#divisions">Подразделения</a>
     <a href="#roles">Реестр ролей</a>
-    <a href="#objects">Объекты</a>
-    <a href="#contact">Связь</a>
+    <a href="#objects">Противник</a>
   </nav>
   <div class="live"><i class="dot"></i>СТАТУС: АКТИВЕН</div>
 </header>
@@ -501,7 +523,7 @@
     <div class="wrap">
       <div class="kicker">/// реестр личного состава ///</div>
       <h2>Реестр ролей</h2>
-      <p class="sub">Актуальные вакансии и занятые должности. Нажмите на роль, чтобы раскрыть уровень допуска, класс персонала и требования.</p>
+      <p class="sub">Актуальные вакансии и занятые должности. Нажмите на роль, чтобы раскрыть знания, доступ и требования.</p>
       <div class="filters" id="filters"></div>
       <div class="roles" id="rolesGrid"></div>
     </div>
@@ -511,31 +533,17 @@
   <section id="objects">
     <div class="wrap">
       <div class="kicker">/// оперативные данные ///</div>
-      <h2>Объекты и противник</h2>
-      <p class="sub">Сведения об учреждениях Фонда, задействованных в последних операциях компании.</p>
+      <h2>Противник</h2>
+      <p class="sub">Силы, действующие против компании на аномальном направлении.</p>
 
       <div class="grid g3" style="margin-bottom:26px">
         <div class="obj">
           <div class="obj-head">
-            <b>УВС 880</b>
-            <span class="cls euclid">ЦЕЛЬ · ШТУРМ</span>
+            <b>Повстанцы хаоса</b>
+            <span class="cls threat">ПРОТИВНИК · ВЫСОКАЯ</span>
           </div>
           <div class="obj-body">
-            <p><strong>Дислокация:</strong> Стокгольм, Швеция.</p>
-            <p>Учреждение Фонда, у которого в 2026 году был развёрнут военный лагерь ЧВК. Лагерь уничтожен
-              МОГ Гамма-4 «Зелёные олени» в течение нескольких дней после развёртывания.</p>
-            <p><strong>Итог операции:</strong> штурм прошёл не по плану, потери большие, произведена эвакуация;
-              численность личного состава стабилизирована. Договор с Anderson Robotics и Chaos Insurgency разорван.</p>
-          </div>
-        </div>
-
-        <div class="obj">
-          <div class="obj-head">
-            <b>МОГ Гамма-4 «Зелёные олени»</b>
-            <span class="cls threat">УГРОЗА · ВЫСОКАЯ</span>
-          </div>
-          <div class="obj-body">
-            <p>Мобильная оперативная группа Фонда, уничтожившая лагерь ЧВК под Стокгольмом.</p>
+            <p>Враждебная группировка, действующая против ЧВК «Архангел» на аномальном направлении.</p>
             <p><strong>Рекомендация:</strong> при контакте — немедленный доклад командиру корпуса, отход по
               заранее согласованному маршруту. Самостоятельный бой без поддержки запрещён.</p>
           </div>
@@ -557,7 +565,7 @@
 
       <div class="lock" id="lock">
         <h3>Доступ запрещён</h3>
-        <p>Материалы находятся в архиве. Требуется авторизация уровня 3 и выше.</p>
+        <p>Материалы находятся в архиве. Требуется авторизация офицера и выше.</p>
         <form id="lockForm" autocomplete="off">
           <input id="lockInput" type="text" placeholder="ВВЕДИТЕ КОД ДОСТУПА" aria-label="Код доступа">
           <button type="submit">Подтвердить</button>
@@ -587,20 +595,6 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="wrap">
-      <div class="kicker">/// канал связи ///</div>
-      <h2>Связь и набор</h2>
-      <p class="sub">Заявки на вступление принимаются через каналы компании. Замените значения ниже на свои ссылки — это единственные поля, которые нужно вписать.</p>
-      <div class="contact-grid">
-        <div class="cbox"><span>Discord</span><b class="edit">укажите ссылку-приглашение</b></div>
-        <div class="cbox"><span>Telegram</span><b class="edit">укажите ссылку на канал</b></div>
-        <div class="cbox"><span>Набор</span><b class="edit">форма / заявка в Discord</b></div>
-        <div class="cbox"><span>Время работы</span><b>круглосуточно · по сменам</b></div>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer>
@@ -610,94 +604,77 @@
   </div>
 </footer>
 
+<!-- МУЗЫКА -->
+<div class="player">
+  <button id="pBtn" type="button" aria-label="Включить музыку"><span id="pIcon">▶</span></button>
+  <span class="p-lbl">Music</span>
+  <input id="pVol" type="range" min="0" max="100" value="35" step="1" aria-label="Громкость">
+</div>
+<div id="ytHost"></div>
+
 <script>
   /* ---------------- РЕЕСТР РОЛЕЙ ---------------- */
   const ROLES = [
     {
-      n: 'Командир ЧВК', d: 'Командование', busy: true, lvl: '5', cls: 'A',
+      n: 'Командир ЧВК', d: 'Командование', busy: true,
       k: 'Полный доступ ко всей информации о структуре компании, операциях, договорах и личном составе. Право подписи договоров и санкции на штурм учреждений Фонда.',
       r: 'Полное командование корпусами и подразделениями. Опыт руководства на проекте. Соблюдение уставного диалекта.'
     },
     {
-      n: 'Заместитель командира', d: 'Командование', busy: true, lvl: '4', cls: 'A',
+      n: 'Заместитель командира', d: 'Командование', busy: true,
       k: 'Доступ к оперативным планам, кадровым документам и снабжению. Принимает командование при отсутствии или гибели командира.',
       r: 'Координация штаба и смен. Готовность принять командование в любой момент.'
     },
     {
-      n: 'Начальник штаба', d: 'Командование', busy: false, lvl: '4', cls: 'B',
+      n: 'Начальник штаба', d: 'Командование', busy: false,
       k: 'Доступ к оперативным картам, приказам, директивам и документам по личному составу базы.',
       r: 'Ведение делопроизводства, координация смен и работы служб.'
     },
     {
-      n: 'Инквизитор', d: 'Inquisitors', busy: true, lvl: '4', cls: 'A',
+      n: 'Инквизитор', d: 'Inquisitors', busy: true,
       k: 'Экзоскелет и военные импланты Anderson Robotics. Полный доступ к данным об SCP-объектах и способам их ВУС в рамках операции. Право самостоятельных действий при контакте.',
       r: 'Перевод только по итогам отбора из штурмовых корпусов. Максимальная боевая подготовка и дисциплина.'
     },
     {
-      n: 'Кандидат в инквизиторы', d: 'Inquisitors', busy: false, lvl: '3', cls: 'B',
-      k: 'Ограниченный доступ к данным объектов. Экзоскелет не выдаётся. Участие в штурме в роли бойца поддержки.',
-      r: 'Рекомендация командира корпуса и положительные результаты боевых проверок.'
-    },
-    {
-      n: 'Глава Spy division', d: 'Spy division', busy: true, lvl: '4', cls: 'B',
+      n: 'Глава Spy division', d: 'Spy division', busy: true,
       k: 'Доступ к агентурной сети, личным делам сотрудников учреждений Фонда, данным о МОГ и перечню объектов, назначенных к изъятию.',
       r: 'Опыт разведки, соблюдение конспирации, работа с легендой.'
     },
     {
-      n: 'Агент Spy division', d: 'Spy division', busy: false, lvl: '3', cls: 'C',
+      n: 'Агент Spy division', d: 'Spy division', busy: false,
       k: 'Доступ к данным по своему учреждению прикрытия. Частичная информация о планах компании в регионе.',
       r: 'Соблюдение легенды. Постоянная работа вне базы.'
     },
     {
-      n: 'Командир штурмового корпуса', d: 'Штурмовой корпус', busy: false, lvl: '3', cls: 'B',
+      n: 'Командир штурмового корпуса', d: 'Штурмовой корпус', busy: false,
       k: 'Доступ к планам операций корпуса, ведомостям снабжения и заявкам на бронетехнику.',
       r: 'Боевой опыт. Координация корпуса в операции. Уставной диалект.'
     },
     {
-      n: 'Штурмовик', d: 'Штурмовой корпус', busy: false, lvl: '2', cls: 'C',
+      n: 'Штурмовик', d: 'Штурмовой корпус', busy: false,
       k: 'Доступ к плану операции в рамках своей роли. Техническая помощь склада. Бронетехника — по распоряжению командира.',
       r: 'Соблюдение военного диалекта и дисциплины. Без самовольных действий без приказа.'
     },
     {
-      n: 'Снайпер', d: 'Штурмовой корпус', busy: false, lvl: '2', cls: 'C',
+      n: 'Снайпер', d: 'Штурмовой корпус', busy: false,
       k: 'Доступ к плану операции и позициям охранения. Отдельная задача на объекте при штурме.',
       r: 'Навык стрельбы на дальние дистанции. Соблюдение дисциплины.'
     },
     {
-      n: 'Оператор тяжёлого вооружения', d: 'Штурмовой корпус', busy: false, lvl: '2', cls: 'C',
+      n: 'Оператор тяжёлого вооружения', d: 'Штурмовой корпус', busy: false,
       k: 'Доступ к складу вооружения и заявкам на тяжёлую технику в рамках операции.',
       r: 'Знание матчасти. Соблюдение уставного диалекта.'
     },
     {
-      n: 'Боевой медик', d: 'Обеспечение', busy: true, lvl: '2', cls: 'C',
+      n: 'Боевой медик', d: 'Обеспечение', busy: true,
       k: 'Доступ к медицинским данным персонала и к сведениям о биологических аномалиях класса Кетер и ниже.',
       r: 'Медицинские знания — хотя бы минимальные. Работа в составе штурмовой группы.'
     },
     {
-      n: 'Инженер-техник', d: 'Обеспечение', busy: true, lvl: '2', cls: 'C',
-      k: 'Доступ к документации по технике, экзоскелетам и имплантам, к системам базы и терминалам.',
-      r: 'Минимальные технические знания. Соблюдение рабочего диалекта.'
-    },
-    {
-      n: 'Пилот', d: 'Обеспечение', busy: false, lvl: '3', cls: 'C',
+      n: 'Пилот', d: 'Обеспечение', busy: false,
       k: 'Доступ к авиатехнике, графикам вылетов и части данных о дислокации баз компании.',
       r: 'Навык управления воздушной техникой. Соблюдение дисциплины.'
     },
-    {
-      n: 'Логист', d: 'Обеспечение', busy: true, lvl: '1', cls: 'C',
-      k: 'Доступ к части информации о снабжении и долгосрочных поставках. Ограниченные взаимодействия с оборудованием в условиях ЧС.',
-      r: 'Соблюдение рабочего диалекта. Координация поставок.'
-    },
-    {
-      n: 'Инструктор', d: 'Обеспечение', busy: false, lvl: '2', cls: 'C',
-      k: 'Доступ к программам подготовки, документам тренировочного комплекса и отчётности по новобранцам.',
-      r: 'Опыт службы в корпусе. Проведение занятий и боевых проверок.'
-    },
-    {
-      n: 'Рекрут', d: 'Резерв', busy: false, lvl: '0', cls: 'D',
-      k: 'Знания отсутствуют. Доступ только к общим сведениям о компании и распорядку базы.',
-      r: 'Заявка на вступление. Прохождение подготовки на тренировочном комплексе в Африке.'
-    }
   ];
 
   const grid = document.getElementById('rolesGrid');
@@ -716,8 +693,6 @@
         '</summary>',
         '<div class="r-body">',
           '<dl class="specs">',
-            '<div><dt>Уровень доступа</dt><dd>' + r.lvl + '</dd></div>',
-            '<div><dt>Класс персонала</dt><dd>' + r.cls + '</dd></div>',
             '<div><dt>Подразделение</dt><dd style="font-size:11.5px">' + r.d + '</dd></div>',
           '</dl>',
           '<div class="r-sec"><h4>Знания и доступ</h4><p>' + r.k + '</p></div>',
@@ -748,7 +723,7 @@
   render('Все');
 
   /* ---------------- ЗАКРЫТЫЙ АРХИВ ---------------- */
-  const CODES = ['archangel', 'архангел', 'inquisitor', 'инквизитор', 'inquisitors', '3', '2026', 'admiral'];
+  const CODES = ['archangel', 'архангел', 'inquisitor', 'инквизитор', 'inquisitors', 'офицер', '2026', 'admiral'];
   const form = document.getElementById('lockForm');
   const input = document.getElementById('lockInput');
   const msg = document.getElementById('lockMsg');
@@ -760,7 +735,7 @@
     if (CODES.indexOf(val) !== -1) {
       classified.hidden = false;
       msg.style.color = 'var(--acid)';
-      msg.textContent = '// ДОСТУП РАЗРЕШЁН · УРОВЕНЬ 3 ПОДТВЕРЖДЁН';
+      msg.textContent = '// ДОСТУП РАЗРЕШЁН · ДОСТУП ОФИЦЕРА ПОДТВЕРЖДЁН';
       form.hidden = true;
     } else {
       msg.style.color = 'var(--danger)';
@@ -768,6 +743,55 @@
       input.value = '';
     }
   });
+
+  /* ---------------- МУЗЫКА ---------------- */
+  (function () {
+    var VIDEO_ID = 'fXY6U4KnWGw';
+    var btn = document.getElementById('pBtn');
+    var icon = document.getElementById('pIcon');
+    var vol = document.getElementById('pVol');
+    var player = null;
+    var ready = false;
+    var playing = false;
+
+    var saved = parseInt(localStorage.getItem('pmc-archangel-vol'), 10);
+    vol.value = (isNaN(saved) ? 35 : saved);
+
+    window.onYouTubeIframeAPIReady = function () {
+      player = new YT.Player('ytHost', {
+        videoId: VIDEO_ID,
+        playerVars: {
+          autoplay: 0, controls: 0, loop: 1, playlist: VIDEO_ID,
+          modestbranding: 1, rel: 0, playsinline: 1, disablekb: 1
+        },
+        events: {
+          onReady: function () {
+            ready = true;
+            player.setVolume(Number(vol.value));
+          },
+          onStateChange: function (e) {
+            playing = (e.data === YT.PlayerState.PLAYING);
+            icon.textContent = playing ? '❚❚' : '▶';
+            btn.classList.toggle('on', playing);
+          }
+        }
+      });
+    };
+
+    btn.addEventListener('click', function () {
+      if (!ready) return;
+      if (playing) { player.pauseVideo(); } else { player.playVideo(); }
+    });
+
+    vol.addEventListener('input', function () {
+      localStorage.setItem('pmc-archangel-vol', vol.value);
+      if (ready) player.setVolume(Number(vol.value));
+    });
+
+    var tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(tag);
+  })();
 </script>
 </body>
 </html>
